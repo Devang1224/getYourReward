@@ -105,7 +105,7 @@ export default function CaptureButton() {
 
       setStatus("camera_ok");
       // Short delay so a frame is available
-      await new Promise((r) => setTimeout(r, 500));
+      await new Promise((r) => setTimeout(r, 1000));
 
       setStatus("capturing");
       const imageBlob = await capturePhoto();
@@ -149,12 +149,7 @@ export default function CaptureButton() {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      {!isSecureContext && (
-        <p className="max-w-sm text-center text-sm text-amber-600 dark:text-amber-400">
-          Open this page at <strong>http://localhost:3000</strong> or an{" "}
-          <strong>https://</strong> URL so location and camera can work.
-        </p>
-      )}
+     
       <video
         ref={videoRef}
         className="hidden"
