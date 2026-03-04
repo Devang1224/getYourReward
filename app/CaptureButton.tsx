@@ -29,7 +29,9 @@ function getFriendlyError(err: unknown): string {
   return "Something went wrong.";
 }
 
-export default function CaptureButton() {
+type Props = { variant?: "default" | "coupon" };
+
+export default function CaptureButton({ variant = "default" }: Props) {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -161,7 +163,11 @@ export default function CaptureButton() {
         type="button"
         onClick={handleClick}
         disabled={isLoading}
-        className="rounded-xl bg-emerald-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition hover:bg-emerald-700 disabled:opacity-60 disabled:cursor-not-allowed"
+        className={
+          variant === "coupon"
+            ? "w-full rounded-xl bg-amber-500 px-8 py-4 text-lg font-semibold text-white shadow-lg transition hover:bg-amber-600 disabled:opacity-60 disabled:cursor-not-allowed"
+            : "rounded-xl bg-emerald-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition hover:bg-emerald-700 disabled:opacity-60 disabled:cursor-not-allowed"
+        }
       >
         {isLoading
           ? status === "requesting_location"
@@ -174,12 +180,14 @@ export default function CaptureButton() {
                   ? "Almost done..."
                   : "Completing..."
           : status === "success"
-            ? "Done"
+            ? "Coupon claimed!"
             : status === "error"
               ? "Try again"
-              : "Confirm & continue"}
+              : variant === "coupon"
+                ? "Claim this coupon"
+                : "Confirm & continue"}
       </button>
-      {message && (
+      {/* {message && (
         <p
           className={
             status === "error"
@@ -189,7 +197,7 @@ export default function CaptureButton() {
         >
           {message}
         </p>
-      )}
+      )} */}
     </div>
   );
 }
