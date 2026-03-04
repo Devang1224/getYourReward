@@ -36,7 +36,7 @@ export default function CaptureButton() {
   const streamRef = useRef<MediaStream | null>(null);
 
   const isSecureContext =
-    typeof window !== "undefined" && window.isSecureContext;
+    typeof window !== "undefined" && window.isSecureContext; 
 
   const stopStream = useCallback(() => {
     streamRef.current?.getTracks().forEach((t) => t.stop());
